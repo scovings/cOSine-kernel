@@ -1,4 +1,4 @@
-org 0x7C00
+org 0x0
 bits 16
 
 
@@ -6,13 +6,18 @@ bits 16
 
 
 start:
-    jmp main
+    ; print hello world message
+    mov si, msg_hello
+    call puts
 
+.halt:
+    cli
+    hlt
 
 ;
 ; Prints a string to the screen
 ; Params:
-;   - ds:si points to the string
+;   - ds:si points to string
 ;
 puts:
     ; save registers we will modify
@@ -34,33 +39,7 @@ puts:
 .done:
     pop bx
     pop ax
-    pop si
+    pop si    
     ret
 
-
-main:
-    ; setup data segment
-    mov ax, 0          ; can't set ds/es directly
-    mov ds, ax
-    mov es, ax
-
-    ; setup stack
-    mov ss, ax
-    mov sp, 0x7C00      ; stack grows downwards from where we are loaded in memory
-
-    ; print hello world message
-    mov si, msg_hello
-    call puts
-
-    hlt
-
-.halt:
-    jmp .halt
-
-
-
-msg_hello: db 'Hello, World!', ENDL, 0
-
-
-times 510-($-$$) db 0
-dw 0AA55h
+msg_hello: db 'Welcome to cOSine!', ENDL, 0

@@ -1,0 +1,7 @@
+{
+	"Insert dollar parens": {
+  	"prefix": "w",
+  	"body": ["$(${1})"],
+  	"description": "Insert $() with cursor inside"
+	},
+}
